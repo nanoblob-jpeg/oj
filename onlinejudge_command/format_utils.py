@@ -66,6 +66,7 @@ def match_with_format(directory: pathlib.Path, format: str, path: pathlib.Path) 
     table = {}
     table['s'] = '(?P<name>.+)'
     table['e'] = '(?P<ext>in|out)'
+    table['f'] = '(in|out)'
     pattern = re.compile(re.escape(str(directory.resolve()) + os.path.sep) + percentformat(re.escape(format).replace(re.escape('%'), '%'), table))
     return pattern.match(str(path.resolve()))
 

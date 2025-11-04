@@ -20,8 +20,6 @@ import colorama
 import requests
 
 import onlinejudge_command.__about__ as version
-from onlinejudge import utils
-from onlinejudge.type import *
 
 logger = getLogger(__name__)
 
@@ -30,23 +28,6 @@ NO_HEADER = 'NO_HEADER: '
 HINT = 'HINT: '
 SUCCESS = 'SUCCESS: '
 FAILURE = 'FAILURE: '
-
-user_data_dir = utils.user_data_dir
-user_cache_dir = utils.user_cache_dir
-default_cookie_path = utils.default_cookie_path
-
-
-@contextlib.contextmanager
-def new_session_with_our_user_agent(*, path: pathlib.Path) -> Iterator[requests.Session]:
-    session = requests.Session()
-    session.headers['User-Agent'] = '{}/{} (+{})'.format(version.__package_name__, version.__version__, version.__url__)
-    logger.debug('User-Agent: %s', session.headers['User-Agent'])
-    try:
-        with utils.with_cookiejar(session, path=path) as session:
-            yield session
-    except http.cookiejar.LoadError:
-        logger.info(HINT + 'You can delete the broken cookie.jar file: %s', str(path))
-        raise
 
 
 def textfile(s: str) -> str:  # should have trailing newline
