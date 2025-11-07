@@ -379,4 +379,4 @@ def run(args: 'argparse.Namespace') -> int:
             json.dump(history, fh)
 
     # return the result
-    return ac_count == len(tests)
+    return (ac_count, slowest, heaviest, history)
